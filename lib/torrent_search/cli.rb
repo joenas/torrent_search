@@ -5,6 +5,8 @@ require 'torrent_search/result_table'
 require 'torrent_search/search'
 require 'torrent_search/version'
 
+trap('INT') { puts "\nQuitting..."; exit 0}
+
 module TorrentSearch
 
   class CLI < Thor
@@ -18,13 +20,13 @@ module TorrentSearch
 
     default_command :search
     desc '[TERMS]', 'tsearch help search for options'
-    method_option :irresponsible,
-                  type: :boolean,
-                  aliases: '-i',
-                  desc: 'Include IrresponsibleModule smell in output.'
+    method_option :limit,
+                  type: :numeric,
+                  aliases: '-l',
+                  desc: 'Limit search results, default 10'
 
     def search(*search_terms)
-      Search.new(self).perform(search_terms)
+      Search.new(self).perform(search_terms, options)
       rescue SocketError
         error 'No network connection?'
     end

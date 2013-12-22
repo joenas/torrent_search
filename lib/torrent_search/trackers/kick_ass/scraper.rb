@@ -8,8 +8,9 @@ module TorrentSearch
         BASE_URL = "http://kickass.to/usearch"
         LIMIT = 10
 
-        def initialize(search_terms)
+        def initialize(search_terms, options = {})
           @search_terms = search_terms
+          @options = options
         end
 
         def search
@@ -23,7 +24,11 @@ module TorrentSearch
         def search_results
           page.search('table.data tr').tap do |results|
             results.shift
-          end.take(LIMIT)
+          end.take(limit)
+        end
+
+        def limit
+          @options.fetch 'limit', LIMIT
         end
 
         def page
