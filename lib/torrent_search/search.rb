@@ -4,8 +4,8 @@ module TorrentSearch
       @view = view
     end
 
-    def perform(search_terms)
-      search_result = Trackers::KickAss::Scraper.new(search_terms).search
+    def perform(search_terms, options = {})
+      search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
       @view.print_table ResultTable.new(search_result)
       choose_action search_result
     end
@@ -14,7 +14,7 @@ module TorrentSearch
     def choose_action(search_result)
       selected = ask("Choose torrent (0 to search again):").to_i
       if selected != 0
-        download search_result[selected]
+        download search_result[selected-1]
       else
         search_again
       end

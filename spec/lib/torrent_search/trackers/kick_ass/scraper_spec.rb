@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe TorrentSearch::Trackers::KickAss::Scraper do
   Given(:search_terms){['ubuntu', '12']}
-  subject{described_class.new(search_terms)}
+  Given(:options){{}}
+  subject{described_class.new(search_terms, options)}
 
   describe '#search', :vcr do
   	Given(:torrent){result.first}
@@ -15,5 +16,10 @@ describe TorrentSearch::Trackers::KickAss::Scraper do
     And{torrent.leechers.should eq "20"}
     And{torrent.href.should eq "http://torcache.net/torrent/962FCFA03B061506E2E133AC4B5C8BC5151C4C6A.torrent"}
     And{torrent.filename.should eq "[kickass.to]ubuntu.12.04.3.64.bit"}
+
+    context 'with limit' do
+      Given(:options){{'limit' => 5}}
+      Then{result.count.should eq 5}
+    end
   end
 end
