@@ -1,16 +1,27 @@
 module TorrentSearch
-  class Search
-    def initialize(view)
+
+  OPTIONS = {
+    q: :quit,
+    s: :search_again
+  }
+
+  class Menu < SimpleDelegator
+    def initialize(view, search_result)
       @view = view
+      @search_result = search_result
+      super @view
     end
 
-    def perform(search_terms, options = {})
-      search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
-      @view.print_table ResultTable.new(search_result)
-      choose_action search_result
+    def display
+      print_table ResultTable.new(@search_result)
+      print_in_columns actions
     end
 
   private
+    def actions
+      ['Actions', *OPTIONS.values]
+    end
+
     def choose_action(search_result)
       selected = ask("Choose torrent (0 to search again):").to_i
       if selected != 0

@@ -26,7 +26,9 @@ module TorrentSearch
                   desc: 'Limit search results, default 10'
 
     def search(*search_terms)
-      Search.new(self).perform(search_terms, options)
+      search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
+      menu = Menu.new(self, search_result).display
+      #Search.new(self).perform(search_terms, options)
       rescue SocketError
         error 'No network connection?'
     end
