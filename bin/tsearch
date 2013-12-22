@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require "torrent_search"
+require "torrent_search/cli"
+
+TorrentSearch::CLI.start
