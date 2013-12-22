@@ -1,4 +1,8 @@
 require 'thor'
+require 'torrent_search/default_command'
+require 'torrent_search/download'
+require 'torrent_search/result_table'
+require 'torrent_search/search'
 require 'torrent_search/version'
 
 module TorrentSearch
@@ -13,25 +17,16 @@ module TorrentSearch
     end
 
     default_command :search
-    desc 'smell FILE(S)|DIR', 'Shorthand: preek [FILES]'
+    desc '[TERMS]', 'tsearch help search for options'
     method_option :irresponsible,
                   type: :boolean,
                   aliases: '-i',
                   desc: 'Include IrresponsibleModule smell in output.'
 
-    method_option :compact,
-                  type: :boolean,
-                  aliases: '-c',
-                  desc: 'Compact output.'
-
-    method_option :verbose,
-                  type: :boolean,
-                  aliases: '-v',
-                  desc: 'Report files with no smells.'
-
-
     def search(*search_terms)
-      puts search_terms.inspect
+      Search.new(self).perform(search_terms)
+      rescue SocketError
+        error 'No network connection?'
     end
   end
 end
