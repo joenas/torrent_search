@@ -17,6 +17,8 @@ module TorrentSearch
           search_results.map do |row|
             Torrent.new(row)
           end
+        rescue Mechanize::ResponseCodeError
+          []
         end
 
         private
