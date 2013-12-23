@@ -1,4 +1,4 @@
-require 'open-uri'
+require "httparty"
 
 module TorrentSearch
   DEFAULT_DIR = '.'
@@ -26,10 +26,8 @@ module TorrentSearch
 
     def save!(filename)
       say "Downloading #{@torrent.name}...", :green
-      File.open(filename, "wb") do |saved_file|
-        open(@torrent.href, "rb") do |read_file|
-          saved_file.write(read_file.read)
-        end
+      File.open(filename, "wb") do |file|
+        file.write HTTParty.get(@torrent.href).parsed_response
       end
     end
 

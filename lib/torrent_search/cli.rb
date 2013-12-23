@@ -29,7 +29,6 @@ module TorrentSearch
 
     def search(*search_terms)
       search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
-      #search_result = []
       Menu.new(self, search_result).display
       rescue SocketError
         error 'No network connection?'
