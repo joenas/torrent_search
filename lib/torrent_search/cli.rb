@@ -2,16 +2,18 @@ require 'thor'
 require 'torrent_search/default_command'
 require 'torrent_search/download'
 require 'torrent_search/result_table'
-require 'torrent_search/search'
+require 'torrent_search/menu'
 require 'torrent_search/version'
 
-trap('INT') { puts "\nQuitting..."; exit 0}
-
 module TorrentSearch
-
   class CLI < Thor
     include Thor::Actions
     extend DefaultCommand
+
+    def self.quit
+      puts "\nQuitting.."
+      exit 0
+    end
 
     desc 'version', 'Shows version'
     def version(*)
@@ -27,10 +29,12 @@ module TorrentSearch
 
     def search(*search_terms)
       search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
-      menu = Menu.new(self, search_result).display
-      #Search.new(self).perform(search_terms, options)
+      Menu.new(self, search_result).display
       rescue SocketError
         error 'No network connection?'
     end
+
   end
 end
+
+trap('INT') { TorrentSearch::CLI::quit }

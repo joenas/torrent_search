@@ -2,7 +2,7 @@ module TorrentSearch
   class ResultTable
     include Enumerable
     extend Forwardable
-    def_delegators :@table, :last, :[], :each, :empty?
+    def_delegators :@table, :[], :each, :empty?
 
     def initialize(search_result)
       @search_result = search_result
@@ -18,9 +18,14 @@ module TorrentSearch
       table = [headers]
       counter = 0
       @search_result.each_with_object(table) do |torrent, object|
+        object << [counter, *values(torrent)]
         counter += 1
-        object << [counter, torrent.name, torrent.size, torrent.seeders, torrent.leechers]
       end
+    end
+
+    def values(torrent)
+      meths = headers.dup.tap {|ary|ary.shift}
+      meths.map {|meth|torrent.send meth}
     end
   end
 end
