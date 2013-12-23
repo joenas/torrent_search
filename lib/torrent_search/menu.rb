@@ -7,10 +7,6 @@ module TorrentSearch
   }
 
   class Menu < SimpleDelegator
-    def self.actions_string
-      ACTIONS.map {|hash| hash.join(": ")}.join("\t")
-    end
-
     def initialize(view, search_result)
       @view = view
       @search_result = search_result
@@ -19,15 +15,35 @@ module TorrentSearch
 
     def display
       say_status "\n[Results]", '', :green
-      print_table ResultTable.new(@search_result)
-      say_status "\n[Actions]", Menu.actions_string, :blue
+      if results?
+        print_table result_table
+      else
+        say 'Nothing found'
+      end
+      say_status "\n[Actions]", actions, :blue
       choose_action!
     end
 
   private
+    def results?
+      @search_result.any?
+    end
+
+    def result_table
+      ResultTable.new(@search_result)
+    end
+
+    def available_actions
+      ACTIONS.dup.tap {|hash| hash.delete(:d) unless results? }
+    end
+
+    def actions
+      available_actions.map {|hash| hash.join(": ")}.join("\t")
+    end
+
     def choose_action!
       chosen = ask("Choose:").to_sym
-      send ACTIONS.fetch(chosen, :invalid_command)
+      send available_actions.fetch(chosen, :invalid_command)
     end
 
     def invalid_command
