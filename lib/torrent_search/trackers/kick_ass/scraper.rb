@@ -45,9 +45,7 @@ module TorrentSearch
         end
 
         def agent
-          @agent ||= Mechanize.new { |agent|
-            agent.user_agent_alias = 'Mac Safari'
-          }
+          @agent ||= Mechanize.new { |agent| agent.user_agent_alias = 'Mac Safari' }
         end
       end
     end
