@@ -1,38 +1,39 @@
 require "httparty"
 
 module TorrentSearch
-  DEFAULT_DIR = '.'
 
   class Download
-    def initialize(view, torrent)
-      @view = view
+    def initialize(path, torrent)
+      @path = path
       @torrent = torrent
     end
 
-    def perform
-      save! filename
-      say 'Complete', :green
-    end
-
-  private
-    def filename
-      File.join(path, "#{@torrent.filename}.torrent")
-    end
-
-    def path
-      path = @view.ask "Directory to save file (default '#{DEFAULT_DIR}'):"
-      path.empty? ? DEFAULT_DIR : path
-    end
-
-    def save!(filename)
-      say "Downloading #{@torrent.name}...", :green
-      File.open(filename, "wb") do |file|
-        file.write HTTParty.get(@torrent.href).parsed_response
+    def perform(view)
+      if success?
+        save!
+        view.success
+      else
+        view.failure response, @torrent.href
       end
     end
 
-    def say(*args)
-      @view.say *args
+  private
+    def success?
+      response.code == 200
+    end
+
+    def filename
+      File.join(@path, "#{@torrent.filename}.torrent")
+    end
+
+    def save!
+      File.open(filename, "wb") do |file|
+        file.write response.parsed_response
+      end
+    end
+
+    def response
+      @response ||= HTTParty.get(@torrent.href)
     end
   end
 end
