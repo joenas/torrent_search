@@ -21,7 +21,7 @@ module TorrentSearch
                   desc: 'Limit search results, default 10'
 
     def search(*search_terms)
-      SearchController.new.search search_terms, options
+      Controllers::Search.new.search search_terms, options
     end
 
   end
