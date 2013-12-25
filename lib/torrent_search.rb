@@ -9,9 +9,10 @@ require 'torrent_search/views/download'
 require 'torrent_search/views/menu'
 require 'torrent_search/views/search'
 
-require 'torrent_search/download'
-require 'torrent_search/download_controller'
-require 'torrent_search/search_controller'
+require 'torrent_search/services/download'
+
+require 'torrent_search/controllers/download'
+require 'torrent_search/controllers/search'
 
 require 'torrent_search/result_table'
 

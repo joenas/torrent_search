@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TorrentSearch::Download do
+describe TorrentSearch::Services::Download do
   Given(:path){File.join(Dir.pwd, 'spec/tmp')}
   Given(:torrent){OpenStruct.new(href: 'http://asdf.com', filename: 'asdf')}
   Given(:created_file){File.join(path, "#{torrent.filename}.torrent")}

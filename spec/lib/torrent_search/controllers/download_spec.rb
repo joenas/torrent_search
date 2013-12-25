@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe TorrentSearch::DownloadController do
-  Given(:default_dir){TorrentSearch::DownloadController::DEFAULT_DIR}
+describe TorrentSearch::Controllers::Download do
+  Given(:default_dir){described_class::DEFAULT_DIR}
   Given(:path){'.'}
 
   Given(:search_result){['asdf']}
@@ -14,7 +14,7 @@ describe TorrentSearch::DownloadController do
   subject{described_class.new(search_result, view)}
 
   describe '#download' do
-    Given{TorrentSearch::Download.should_receive(:new).with(path, torrent).and_return(download_double)}
+    Given{TorrentSearch::Services::Download.should_receive(:new).with(path, torrent).and_return(download_double)}
     Given{download_double.should_receive(:perform).with(view)}
     Given{view.stub(:directory?).and_return(path)}
 
