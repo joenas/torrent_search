@@ -12,6 +12,8 @@ Search for torrents and download from command line. Trackers will be added, PRs 
 
 ## Usage
 
+![cli usage](https://raw.github.com/joenas/torrent_search/master/doc/screenshot.png)
+
 ```shell
 Usage:
   tsearch [TERMS]
