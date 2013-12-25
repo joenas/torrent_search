@@ -9,16 +9,13 @@ module TorrentSearch
       end
 
       def download
-        torrent = choose_torrent!
-        path = choose_path!
-        @view.downloading! torrent
-        Services::Download.new(path, torrent).perform @view
+        perform_download choose_torrent!, choose_path!
       end
 
     private
-      def choose_path!
-        path = @view.directory? DEFAULT_DIR
-        path.empty? ? DEFAULT_DIR : path
+      def perform_download(torrent, path)
+        @view.downloading! torrent
+        Services::Download.new(path, torrent).perform @view
       end
 
       def choose_torrent!
@@ -28,6 +25,11 @@ module TorrentSearch
           return @search_result[index.to_i] if valid_choice?(index)
           @view.invalid_option!
         end
+      end
+
+      def choose_path!
+        path = @view.directory? DEFAULT_DIR
+        path.empty? ? DEFAULT_DIR : path
       end
 
       def valid_choice?(index)

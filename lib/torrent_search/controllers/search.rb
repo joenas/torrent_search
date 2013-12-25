@@ -13,20 +13,29 @@ module TorrentSearch
 
       def search(search_terms = nil, options = {})
         search_terms ||= @view.search_terms?
-        @search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
-        Views::Menu.new(available_actions, @search_result).display
+        perform_search search_terms, options
+        display_menu
         choose_action!
         rescue SocketError
           error 'No network connection?'
       end
 
-      def quit
-        CLI::quit
-      end
 
     private
+      def perform_search(search_terms, options)
+        @search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
+      end
+
+      def display_menu
+        Views::Menu.new(available_actions, @search_result).display
+      end
+
       def download
         Download.new(@search_result).download
+      end
+
+      def quit
+        CLI::quit
       end
 
       def choose_action!
@@ -40,11 +49,7 @@ module TorrentSearch
       end
 
       def available_actions
-        ACTIONS.dup.tap {|hash| hash.delete(:d) unless results? }
-      end
-
-      def results?
-        @search_result.any?
+        ACTIONS.dup.tap {|hash| hash.delete(:d) unless @search_result.any? }
       end
     end
   end
