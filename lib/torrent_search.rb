@@ -16,7 +16,6 @@ require 'torrent_search/controllers/search'
 
 require 'torrent_search/result_table'
 
-
 require "torrent_search/version"
 
 module TorrentSearch
