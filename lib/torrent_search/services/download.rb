@@ -17,7 +17,6 @@ module TorrentSearch
         end
       end
 
-    private
       def success?
         response.code == 200
       end
@@ -26,6 +25,7 @@ module TorrentSearch
         File.join(@path, "#{@torrent.filename}.torrent")
       end
 
+    private
       def save!
         File.open(filename, "wb") do |file|
           file.write response.parsed_response

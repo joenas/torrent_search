@@ -15,7 +15,15 @@ module TorrentSearch
     private
       def perform_download(torrent, path)
         @view.downloading! torrent
-        Services::Download.new(path, torrent).perform @view
+        download = Services::Download.new(path, torrent)
+        download.perform @view
+        if download.success? && OS.os_x? && @view.open?
+          open download.filename
+        end
+      end
+
+      def open(filename)
+        `open #{filename}`
       end
 
       def choose_torrent!

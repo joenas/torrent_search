@@ -21,6 +21,10 @@ module TorrentSearch
       def failure(error, href)
         say "Error: #{error.message} - #{href}", :red
       end
+
+      def open?
+        yes? 'Open? (y/n):'
+      end
     end
   end
 end

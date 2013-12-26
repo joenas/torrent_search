@@ -1,6 +1,7 @@
 require 'thor'
 require 'torrent_search/default_command'
 require 'torrent_search/cli'
+require 'torrent_search/os'
 
 require "torrent_search/trackers/kick_ass/kick_ass"
 
