@@ -1,10 +1,3 @@
-require 'thor'
-require 'torrent_search/default_command'
-require 'torrent_search/download'
-require 'torrent_search/result_table'
-require 'torrent_search/menu'
-require 'torrent_search/version'
-
 module TorrentSearch
   class CLI < Thor
     include Thor::Actions
@@ -28,10 +21,7 @@ module TorrentSearch
                   desc: 'Limit search results, default 10'
 
     def search(*search_terms)
-      search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
-      Menu.new(self, search_result).display
-      rescue SocketError
-        error 'No network connection?'
+      Controllers::Search.new.search search_terms, options
     end
 
   end
