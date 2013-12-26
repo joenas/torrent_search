@@ -23,7 +23,7 @@ module TorrentSearch
 
     private
       def perform_search(search_terms, options)
-        @search_result = Trackers::KickAss::Scraper.new(search_terms, options).search
+        @search_result = Trackers::KickAss::search(search_terms, options)
       end
 
       def display_menu

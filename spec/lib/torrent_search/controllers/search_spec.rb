@@ -9,10 +9,9 @@ describe TorrentSearch::Controllers::Search do
   describe '#search' do
     Given(:search_terms){'asdf'}
     Given(:options){{}}
-    Given(:scraper_double){double 'scraper'}
+    Given(:tracker){TorrentSearch::Trackers::KickAss}
 
-    Given{TorrentSearch::Trackers::KickAss::Scraper.should_receive(:new).with(search_terms, options).and_return(scraper_double)}
-    Given{scraper_double.should_receive(:search).and_return(search_result)}
+    Given{tracker.should_receive(:search).with(search_terms, options).and_return(search_result)}
 
     When{subject.search(search_terms, options)}
 
@@ -33,8 +32,7 @@ describe TorrentSearch::Controllers::Search do
         Given{view.stub(:action?).and_return(:s, :q)}
         Given{view.stub(:search_terms?).and_return(new_search_terms)}
 
-        Given{TorrentSearch::Trackers::KickAss::Scraper.should_receive(:new).with(new_search_terms, options).and_return(scraper_double)}
-        Given{scraper_double.should_receive(:search).and_return(search_result)}
+        Given{tracker.should_receive(:search).with(new_search_terms, options).and_return(search_result)}
         Given{TorrentSearch::CLI.should_receive(:quit)}
         Then{}
       end
