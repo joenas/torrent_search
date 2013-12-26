@@ -11,8 +11,10 @@ describe TorrentSearch::Controllers::Download do
     Given(:torrent){search_result.first}
     Given(:path){'.'}
     Given(:download_double){double 'download'}
+    Given{download_double.stub(:success?).and_return(true)}
 
     Given{view.stub(:directory?).and_return(path)}
+    Given{view.stub(:open?).and_return(false)}
 
     Given{TorrentSearch::Services::Download.should_receive(:new).with(path, torrent).and_return(download_double)}
     Given{download_double.should_receive(:perform).with(view)}

@@ -23,7 +23,7 @@ module TorrentSearch
       end
 
       def open?
-        yes? 'Open? (y/n):'
+        yes? 'Open? (y/N):'
       end
     end
   end
