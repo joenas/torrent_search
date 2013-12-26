@@ -1,6 +1,7 @@
 [![Gem Version](https://badge.fury.io/rb/torrent_search.png)](http://badge.fury.io/rb/torrent_search)
+[![Build Status](https://travis-ci.org/joenas/torrent_search.png)](https://travis-ci.org/joenas/torrent_search)
 [![Dependency Status](https://gemnasium.com/joenas/torrent_search.png)](https://gemnasium.com/joenas/torrent_search)
-
+[![Coverage Status](https://coveralls.io/repos/joenas/torrent_search/badge.png)](https://coveralls.io/r/joenas/torrent_search)
 
 # TorrentSearch
 
