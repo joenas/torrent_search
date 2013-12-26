@@ -30,5 +30,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rspec", ">=2.4"
   spec.add_development_dependency "vcr"
   spec.add_development_dependency "webmock"
+  spec.add_development_dependency 'coveralls'
 
 end
