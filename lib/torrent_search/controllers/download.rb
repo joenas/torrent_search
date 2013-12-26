@@ -19,8 +19,7 @@ module TorrentSearch
       end
 
       def choose_torrent!
-        index = ''
-        until valid_choice?(index)
+        while
           index = @view.torrent?(search_result_range.max)
           return @search_result[index.to_i] if valid_choice?(index)
           @view.invalid_option!
