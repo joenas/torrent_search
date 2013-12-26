@@ -28,6 +28,11 @@ module TorrentSearch
         OSES.find {|os| self.send "#{os}?"} || :unknown
       end
 
+      def ==(os)
+        meth = "#{os}?"
+        respond_to?(meth) && send(meth)
+      end
+
     private
       def match?(regexp)
         !!(to_s =~ regexp)
