@@ -1,24 +1,31 @@
+[![Gem Version](https://badge.fury.io/rb/torrent_search.png)](http://badge.fury.io/rb/torrent_search)
+[![Dependency Status](https://gemnasium.com/joenas/torrent_search.png)](https://gemnasium.com/joenas/torrent_search)
+
+
 # TorrentSearch
 
-TODO: Write a gem description
+Search for torrents and download from command line. Trackers will be added, PRs are welcome!
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'torrent_search'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install torrent_search
 
 ## Usage
 
-TODO: Write usage instructions here
+![cli usage](https://raw.github.com/joenas/torrent_search/master/doc/screenshot.png)
+
+```shell
+Usage:
+  tsearch [TERMS]
+
+Options:
+  -l, [--limit=N]  # Limit search results, default 10
+ 
+Commands:
+  tsearch [TERMS]         # tsearch help search for options
+  tsearch help [COMMAND]  # Describe available commands or one specific command
+  tsearch version         # Shows version
+```
 
 ## Contributing
 
